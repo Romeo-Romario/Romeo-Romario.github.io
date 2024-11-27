@@ -1,0 +1,79 @@
+.dropdown {
+    position: relative;
+    display: inline-block;
+    padding: 0%;
+    margin: 0%;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 21.5%;
+    max-height: 20%;
+    overflow-y: scroll;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content button {
+    width: 100%;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content button:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+  .show {display:block;}
+
+
+
+/*  */
+
+
+
+.Dropbtn {
+  background-color: azure;
+  color: black;
+  border: 2px solid black;
+  padding: 1.2vh 2.4vh;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.Dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 12.8vh;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  max-height: 20vh;            /* Set max height to control overflow */          /* Enable scrolling */
+  top: 68.3%;                   
+  left: 17.7%;                     
+}
+
+.Dropdown-content button {
+  width: 100%;
+  color: black;
+  padding: 1.2vh 1.6vh;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.Dropdown-content button:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;              /* Show the dropdown */
+}
+
