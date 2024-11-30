@@ -8,20 +8,6 @@ function dropDown2() {
   document.getElementById("myDropdown2").classList.toggle("show");
 }
   
-  // Close the dropdown if the user clicks outside of it
-// window.onclick = function(event) {
-//   if (!event.target.matches('.dropbtn')) {
-//     var dropdowns = document.getElementsByClassName("dropdown-content");
-//     var i;
-//     for (i = 0; i < dropdowns.length; i++) {
-//       var openDropdown = dropdowns[i];
-//       if (openDropdown.classList.contains('show')) {
-//         openDropdown.classList.remove('show');
-//       }
-//     }
-//   }
-// }
-
 
 function dropDown3() {
   document.getElementById("myDropdown3").classList.toggle("show");
@@ -48,11 +34,11 @@ window.onclick = function(event) {
   }
 }
 
-document.getElementById("leftUpper").addEventListener("click", dropDown1);
 document.getElementById("rightUpper").addEventListener("click", dropDown2);
 document.getElementById("polinomial_degree").addEventListener("click", dropDown3);
 
-
+document.getElementById("rightUpper").addEventListener("touchstart", dropDown2);
+document.getElementById("polinomial_degree").addEventListener("touchstart", dropDown3);
 
 function validateInput(input) {
   // Ensure the value is an integer greater than 2

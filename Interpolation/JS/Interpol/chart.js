@@ -5,39 +5,38 @@ import * as t from "./Interpolations/Trigonometry.js";
 import * as S from "./Interpolations/Splines.js";
 import { Univerasal } from "./Counting.js";
 import { get_dict, get_expression, get_method, get_polinomial_degree } from "../Inteface/storage.js";
+import { get_func_el } from "../Inteface/mathFunc.js";
 
 
-// const xValues = [100,200,300,400,500,600,700,800,900,1000];
+function convertLatexToMathExpression(latexString) {
+  let result = latexString;
 
-// new Chart("myChart", {
-//   type: "line", // Default type for the chart
-//   data: {
-//     labels: xValues,
-//     datasets: [{
-//       type: "scatter",  // Set the first dataset to scatter
-//       data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
-//       borderColor: "red",
-//       backgroundColor: "red", // Color of points
-//       pointStyle: 'circle',   // Shape of points
-//       fill: false
-//     },{
-//       data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
-//       borderColor: "green",
-//       fill: false
-//     },{
-//       data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
-//       borderColor: "blue",
-//       fill: false
-//     }]
-//   },
-//   options: {
-//     legend: {display: true}
-//   }
-// });
+  // Handle nested fractions iteratively
+  while (result.match(/\\frac\s*{[^{}]*}\s*{[^{}]*}/)) {
+      result = result.replace(/\\frac\s*{([^{}]*)}\s*{([^{}]*)}/g, '($1)/($2)');
+    }
 
-let myChart = null;
+  return result
+    .replace(/\\(cos|sin|tan|log|ln|exp)\s*{([^}]*)}/g, '$1($2)') // Handle trigonometric functions
+    .replace(/\\cdot/g, '*')                                       // Convert multiplication
+    .replace(/\\sqrt\s*{([^}]*)}/g, 'sqrt($1)')                    // Convert square roots
+    .replace(/\\left|\\right/g, '')                                // Remove "left" and "right"
+    .replace(/[{}]/g, '')                                          // Remove remaining braces
+    .replace(/\\/g, '');                                           // Remove stray backslashes
+}
 
+function changeLeg(){
+  Plotly.relayout(TESTER, { showlegend: false });
+}
+
+function changebackLeg(){
+  Plotly.relayout(TESTER, { showlegend: true });
+}
+
+
+let TESTER = document.getElementById('tester');
 function Update(){
+
 
 const method = get_method();
 let aLimit = Number(document.getElementById("a_limit").value);
@@ -48,88 +47,113 @@ if(method === "trigonom"){
   bLimit = 2*Math.PI;
 }
 
-const expr = get_expression();
-const dect = get_dict();
-const inter_points = Math.round(Number(document.getElementById("N_interpolation_point").value), 0);
-let X = f.linspace(aLimit, bLimit, 300);
-let Y = f.arr_count(dect[expr], X);
-let xi = [];
-let yi = [];
-if (method === "trigonom"){
-  xi = f.linspace(aLimit, bLimit, inter_points*2);
-  yi = f.arr_count(dect[expr], xi);
-}
-else if(method === "spline"){
-    xi = f.linspace(aLimit, bLimit, inter_points+1);
-    yi = f.arr_count(dect[expr], xi);
-}
-else{
-    xi = f.linspace(aLimit, bLimit, inter_points);
-    yi = f.arr_count(dect[expr], xi);
-}
+let func_el = get_func_el();
+let latexString = func_el.latex();
+
+let str_func = convertLatexToMathExpression(latexString);
+console.log(str_func);
+let F = math.compile(str_func);
+try{
+
+  const inter_points = Math.round(Number(document.getElementById("N_interpolation_point").value), 0);
+  let X = f.linspace(aLimit, bLimit, 300);
+  let Y = f.arr_count((x) => F.evaluate({ x }), X);
+  let xi = [];
+  let yi = [];
+  if (method === "trigonom"){
+    xi = f.linspace(aLimit, bLimit, inter_points*2);
+    yi = f.arr_count((x) => F.evaluate({ x }), xi);
+  }
+  else if(method === "spline"){
+      xi = f.linspace(aLimit, bLimit, inter_points+1);
+      yi = f.arr_count((x) => F.evaluate({ x }), xi);
+  }
+  else{
+      xi = f.linspace(aLimit, bLimit, inter_points);
+      yi = f.arr_count((x) => F.evaluate({ x }), xi);
+  }
+  
+  
+  
+  let y_interpolated = [];
+  const spline_deg = get_polinomial_degree();
+  if(method === "spline"){
+      if(spline_deg === 1){
+        y_interpolated = Univerasal(xi, yi, str_func, "spline_1", aLimit, bLimit, inter_points, X);
+      }
+      if(spline_deg === 3){
+        y_interpolated = Univerasal(xi, yi, str_func, "spline_3", aLimit, bLimit, inter_points, X);
+      }
+  }
+  else{
+    y_interpolated = Univerasal(xi, yi, str_func, method, aLimit, bLimit, inter_points, X);
+  }
+  
 
 
+  // Plotly.purge(TESTER);
 
-let y_interpolated = [];
-const spline_deg = get_polinomial_degree();
-if(method === "spline"){
-    if(spline_deg === 1){
-      y_interpolated = Univerasal(xi, yi, expr, "spline_1", aLimit, bLimit, inter_points, X);
+  Plotly.newPlot( TESTER, [
+    {
+      x: X,
+      y: Y,
+      name: "Main function",
+      mode: 'lines'
+    },
+    {
+      x:xi,
+      y:yi,
+      name: "Interpolational Points",
+      mode: "markers"
+    },
+    {
+      x:X,
+      y:y_interpolated,
+      name: "Interpolated Function",
+      mode: 'lines',
+      line:{
+        dash: "dash",
+        width:2,
+        color: "blue"
+      }
     }
-    if(spline_deg === 3){
-      y_interpolated = Univerasal(xi, yi, expr, "spline_3", aLimit, bLimit, inter_points, X);
-    }
-}
-else{
-  y_interpolated = Univerasal(xi, yi, expr, method, aLimit, bLimit, inter_points, X);
-}
-
-let y_scat = [];
-let index = 0;
-for(let i = 0; i < X.length; i++){
-    if(Y[i] === yi[index]){
-        y_scat.push(yi[index]);
-        index++;
-    }
-    else{
-        y_scat.push(0);
-    }
-}
-
-
-if (myChart) {
-    myChart.destroy();
-}
-
-
-const ctx = document.getElementById("myChart").getContext("2d");
-
-
-myChart = new Chart("myChart", {
-  type: "line", // Default type for the chart
-  data: {
-    labels: X,
-    datasets: [{
-      data: Y,
-      borderColor: "blue",
-      fill: false,
-      label: "Basic function",
-      pointRadius: 0
-    },{
-      data: y_interpolated,
-      borderColor: "red",
-      fill: false,
-      label: "Interpolated",
-      pointRadius: 0
-    }]
+  ],
+  {margin: { t: 0 },
   },
-  options: {
-      legend: {display: true},
-      responsive: true,
-      grid: false
-    }
-});
+  {
+    responsive: true,
+    scrollZoom: true,
+    displayModeBar: false
+  },
+  );
+
+  
+} catch(err){
+  console.error("Error evaluating expression:", err);
+  alert("Invalid formula");
+}
+
+
 }
 
 
 document.getElementById("footage").addEventListener("click", Update);
+document.getElementById("footage").addEventListener("touchstart", Update);
+
+window.addEventListener('resize', () => {
+  if(window.innerWidth <= 700){
+     changeLeg();
+  }
+  else{
+     changebackLeg();
+  }
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+    if(window.innerWidth <= 700){
+      changeLeg();
+  }
+  else{
+      changebackLeg();
+  }
+});

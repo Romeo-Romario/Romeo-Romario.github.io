@@ -3,35 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport">
-    <link rel="stylesheet" href="./CSS/base.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+    <script src="./JS/mathquill-0.10.1/mathquill.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="./JS/mathquill-0.10.1/mathquill.css">
     <link rel="stylesheet" href="./CSS/basic_box.css">
     <link rel="stylesheet" href="./CSS/dropdown.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+    <link rel="stylesheet" href="./CSS/base.css">
     <title>Interpolation</title>
 </head>
 <body>
     <div class="base">
+        <!-- <canvas id="myChart" class="main_chart"></canvas> -->
         <div class="base_box">
             <h1>Function Interpolation</h1>
             <ul class="up">
-                <div class="label_cellbutton">
-                    <label for="cellbutton1">Function to<br/> interpolate</label>
-                    <li id="cellbutton1" class="cellbutton">
-                        <button class="dropbtn" id="leftUpper">\/</button>
-                        <div id="myDropdown1" class="dropdown-content">
-                            <button id="FF">1/(1 + 25*x<span class="superscript">2</span>)</button>
-                            <button id="sigmoid">1/(1+e<span class="superscript">-x</span>)</button>
-                            <button id="exponential_decay_with_oscillations">e<span class="superscript">-x</span> * sin(x)</button>
-                            <button id="gaussian">e<span class="superscript">-x<span class="superscript">2</span>/2</span></button>
-                            <button id="WW">sin(x) + 0.5*sin(3*x)</button>
-                            <button id="RR">(x<span class="superscript">2</span> - 1)/(x<span class="superscript">2</span> + 1)</button>
-                            <button id="sincos">1/10*sin(x<span class="superscript">3</span>) * 4cos(x<span class="superscript">2</span>)</button>
-                        </div>
-                        <div class="text left" id="leftcell">    </div>
-                    </li>
+                <div class="functionbox">
+                    <div class="functionbox_text">y= </div>
+                    <div class="label_cellbutton">
+                        <label for="leftcell" class="lab">Function to interpolate</label>
+                        <div class="text left" id="leftcell"></div>
+                    </div>
                 </div>
                 <div class="label_cellbutton">
-                    <label for="cellbutton2">Interpolation<br/>method</label>
+                    <label for="cellbutton2">Interpolation method</label>
                     <li id="cellbutton2" class="cellbutton">
                         <button class="dropbtn" id="rightUpper">\/</button>
                         <div id="myDropdown2" class="dropdown-content">
@@ -44,7 +40,7 @@
                     </li>
                 </div>
             </ul>
-            <h2>Limits</h2>
+            <h2 class="limit">Limits</h2>
             <ul class="mid">
                 <li>
                     <label for="a_limit">a:</label>
@@ -55,36 +51,37 @@
                     <input type="number" id = "b_limit" class="limit_box" value="1">
                 </li>
             </ul>
-
+            
             <div class="text_cell">
                 <div class="Name" id="inter_point">Number of<br/>Points of Interpolation:</div>
                 <input type="number" id="N_interpolation_point"  min="2" oninput="validateInput(this)" value="2">
             </div>
-
+            
             <div class="text_cell">
                 <div class="Name">Polinomail Degree:</div>
                 <button id="polinomial_degree" class="Dropbtn" disabled="true">1</button>
-                    <div id="myDropdown3" class="Dropdown-content">
-                        <button id="pol_deg_1">1</button>
-                        <button id="pol_deg_3">3</button>
-                    </div>
+                <div id="myDropdown3" class="Dropdown-content">
+                    <button id="pol_deg_1">1</button>
+                    <button id="pol_deg_3">3</button>
+                </div>
             </div>
-
+            
             <div class="plus">
                 <div class="Name">Chebushev Nodes:</div>
                 <button id="chb_nodes">Off</button>
             </div>
-
+            
             <div class="foot">
                 <button id="footage">Update</button>
             </div>
         </div>
-        <canvas id="myChart" class="main_chart"></canvas>
+        <div id="tester" class="main_chart"></div>
     </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> -->
 <script src="./JS/Interpol/chart.js" type="module"></script>
 <script src="./JS/Inteface/dropdowns.js" type="module"></script>
 <script src="./JS/Inteface/dropdownfunctions.js" type="module"></script>
 <script src="./JS/Inteface/storage.js" type="module"></script>
+<script src = "./JS/Inteface/mathFunc.js" type="module"></script>
 </html>

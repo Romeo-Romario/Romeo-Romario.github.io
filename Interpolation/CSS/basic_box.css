@@ -1,18 +1,40 @@
 h1{
     text-align: center;
-    font-size:4vh;
+    font-size:3vh;
     height: 0%;
     margin-top: 0%;
 }
 
 .up{
-    /* width: 80%; */
-    width: 60vh;
+    width: 90%;
+    /* background-color: black; */
+    /* width: 60vh; */
     color:white;
     display: inline-flex;
     justify-content: space-evenly;
-    flex-direction: row;
+    flex-direction: column;
+    /* align-items: stretch; */
 }
+
+
+.functionbox{
+    display: flex;
+    align-items: center;
+    font-size: 120%;
+    margin-bottom: 2vh;
+}
+
+.functionbox_text{
+    color: black;
+    font-size: 3vh;
+    font-weight: bold;
+    font-style: italic;
+    margin: 4vh 1vh 2vh 0vh;
+}
+
+
+
+
 
 .cellbutton{
     flex-direction: row;
@@ -34,7 +56,7 @@ h1{
     display: flex;
     flex-direction: column;
     /* width: 60%; */
-    width: 30vh;
+    width: 40%;
 }
 
 h2{
@@ -88,7 +110,10 @@ h2{
     height: 50%;
     font-size: 3vh;
     font-weight: 600;
-}
+} 
+
+
+
 
 .plus{
     width: 100%;
@@ -135,3 +160,8 @@ h2{
     border-color: rgb(150, 148, 148);
     border-radius: 0.5px;
 }
+
+/* .left{
+    font-weight: 500;
+    width: 140%;
+} */
