@@ -4,7 +4,7 @@ import * as N from "./Interpolations/Nyton.js";
 import * as t from "./Interpolations/Trigonometry.js";
 import * as S from "./Interpolations/Splines.js";
 import { Univerasal } from "./Counting.js";
-import { get_dict, get_expression, get_method, get_polinomial_degree } from "../Inteface/storage.js";
+import { get_method, get_polinomial_degree } from "../Inteface/storage.js";
 import { get_func_el } from "../Inteface/mathFunc.js";
 
 
@@ -35,6 +35,7 @@ function changebackLeg(){
 
 
 let TESTER = document.getElementById('tester');
+
 function Update(){
 
 
@@ -54,8 +55,11 @@ let str_func = convertLatexToMathExpression(latexString);
 console.log(str_func);
 let F = math.compile(str_func);
 try{
-
-  const inter_points = Math.round(Number(document.getElementById("N_interpolation_point").value), 0);
+  let inter_points = Math.round(Number(document.getElementById("N_interpolation_point").value), 0);
+  if(inter_points < 2){
+    alert("Minimum value for Points of Interpolation is 2.");
+    inter_points = 2;
+  }
   let X = f.linspace(aLimit, bLimit, 300);
   let Y = f.arr_count((x) => F.evaluate({ x }), X);
   let xi = [];
@@ -98,13 +102,21 @@ try{
       x: X,
       y: Y,
       name: "Main function",
-      mode: 'lines'
+      mode: 'lines',
+      line:{
+        width: 7,
+        color: "blue"
+      }
     },
     {
       x:xi,
       y:yi,
       name: "Interpolational Points",
-      mode: "markers"
+      mode: "markers",
+      marker: {
+        size: 12, 
+        color: "red" 
+      }
     },
     {
       x:X,
@@ -113,8 +125,8 @@ try{
       mode: 'lines',
       line:{
         dash: "dash",
-        width:2,
-        color: "blue"
+        width: 7,
+        color: "purple"
       }
     }
   ],

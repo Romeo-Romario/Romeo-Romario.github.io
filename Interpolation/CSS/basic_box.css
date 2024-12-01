@@ -159,7 +159,7 @@ h2{
     background-color: #dfdfdf;
     border-color: rgb(150, 148, 148);
     border-radius: 0.5px;
-}
+    pointer-events: none;}
 
 /* .left{
     font-weight: 500;

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
     <script src="./JS/mathquill-0.10.1/mathquill.js"></script>
@@ -22,12 +22,12 @@
                 <div class="functionbox">
                     <div class="functionbox_text">y= </div>
                     <div class="label_cellbutton">
-                        <label for="leftcell" class="lab">Function to interpolate</label>
-                        <div class="text left" id="leftcell"></div>
+                        <label for="leftcell" class="lab" id="func_int">Function to interpolate</label>
+                        <div class="text left" id="leftcell" contenteditable="true"></div>
                     </div>
                 </div>
                 <div class="label_cellbutton">
-                    <label for="cellbutton2">Interpolation method</label>
+                    <label for="cellbutton2" class="lab">Interpolation method</label>
                     <li id="cellbutton2" class="cellbutton">
                         <button class="dropbtn" id="rightUpper">\/</button>
                         <div id="myDropdown2" class="dropdown-content">
@@ -43,18 +43,18 @@
             <h2 class="limit">Limits</h2>
             <ul class="mid">
                 <li>
-                    <label for="a_limit">a:</label>
+                    <label for="a_limit" class="limits">a:</label>
                     <input type="number" id="a_limit" class="limit_box" value="-1">
                 </li>
                 <li>
-                    <label for="b_limit">b:</label>
+                    <label for="b_limit" class="limits">b:</label>
                     <input type="number" id = "b_limit" class="limit_box" value="1">
                 </li>
             </ul>
             
             <div class="text_cell">
                 <div class="Name" id="inter_point">Number of<br/>Points of Interpolation:</div>
-                <input type="number" id="N_interpolation_point"  min="2" oninput="validateInput(this)" value="2">
+                <input type="number" id="N_interpolation_point" value="2">
             </div>
             
             <div class="text_cell">

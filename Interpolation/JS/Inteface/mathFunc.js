@@ -4,3 +4,8 @@ var firstMQ = MQ.MathField(document.getElementById("leftcell"));
 export function get_func_el(){
     return firstMQ;
 }
+
+
+document.getElementById("leftcell").addEventListener("click", () => {
+    firstMQ.focus();
+});

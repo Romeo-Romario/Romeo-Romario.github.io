@@ -34,21 +34,26 @@ window.onclick = function(event) {
   }
 }
 
-document.getElementById("rightUpper").addEventListener("click", dropDown2);
-document.getElementById("polinomial_degree").addEventListener("click", dropDown3);
+let touched = false;
 
-document.getElementById("rightUpper").addEventListener("touchstart", dropDown2);
-document.getElementById("polinomial_degree").addEventListener("touchstart", dropDown3);
+document.getElementById("rightUpper").addEventListener("touchstart", function(e) {
+    e.preventDefault(); 
+    dropDown2();
+});
 
-function validateInput(input) {
-  // Ensure the value is an integer greater than 2
-  let value = parseInt(input.value, 10);
-  if (isNaN(value) || value < 2) {
-      input.value = 2;  // Set to minimum value if invalid
-  }
-}
+document.getElementById("polinomial_degree").addEventListener("touchstart", function(e) {
+    e.preventDefault();
+    touched = true;
+    dropDown3();
+});
 
-// Add the event listener correctly
-document.getElementById("N_interpolation_point").oninput = function() {
-  validateInput(this);
-};
+
+document.getElementById("rightUpper").addEventListener("click", function() {
+    if (!touched) dropDown2();
+    touched = false; 
+});
+
+document.getElementById("polinomial_degree").addEventListener("click", function() {
+    if (!touched) dropDown3();
+    touched = false;
+});

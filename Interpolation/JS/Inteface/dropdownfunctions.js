@@ -30,9 +30,10 @@ function _L(){
         enableInputs();
         tri_change = false;
     }
-    if(deg_change){
+    if(deg_change == true){
         document.getElementById("inter_point").textContent = inter_num;
         deg_change = false;
+        document.getElementById("polinomial_degree").disabled = true;
     }
 }
 function _N(){
@@ -42,9 +43,10 @@ function _N(){
         enableInputs();
         tri_change = false;
     }
-    if(deg_change){
+    if(deg_change == true){
         document.getElementById("inter_point").textContent = inter_num;
         deg_change = false;
+        document.getElementById("polinomial_degree").disabled = true;
     }
 }
 function _T(){
@@ -56,9 +58,10 @@ function _T(){
     document.getElementById("b_limit").disabled = true;
     document.getElementById("b_limit").value = (2*Math.PI).toFixed(4);
     tri_change = true;
-    if(deg_change){
+    if(deg_change == true){
         document.getElementById("inter_point").textContent = inter_num;
         deg_change = false;
+        document.getElementById("polinomial_degree").disabled = true;
     }
 }
 function _S(){
